@@ -17,7 +17,7 @@ const Register = () => {
   async function registerUser(event) {
     event.preventDefault();
     const checkResponse = await fetch(
-      "http://localhost:3000/api/v1/checkRegistration",
+      "https://mindful-ccdkp8tu0-rahulgore7.vercel.app/api/v1/checkRegistration",
       {
         method: "POST",
         headers: {
@@ -44,7 +44,7 @@ const Register = () => {
       return;
     }
 
-    const response = await fetch("http://localhost:3000/api/v1/register", {
+    const response = await fetch("https://mindful-ccdkp8tu0-rahulgore7.vercel.app/api/v1/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
