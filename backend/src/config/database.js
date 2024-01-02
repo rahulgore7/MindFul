@@ -1,16 +1,15 @@
-const mongoose = require('mongoose');
-const connectDB = async()=> {
-  try {
-    mongoose.set('strictQuery', false);
-    const conn = await mongoose.connect(process.env.MONGODB_URI,{
-        dbName:"Mindful",
+const mongoose = require('mongoose')
+
+const connectDB = () => {
+  mongoose
+    .connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+    .then((data) => {
+      console.log(`Mongodb connected with server: ${data.connection.host}`);
     });
-    console.log(`Database Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
+};
 
 module.exports = connectDB;
