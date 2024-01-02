@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Box from "./Box";
-import EditProfile from "./editProfile";
+import EditProfile from "./EditProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, deleteUser, getUserById } from "../actions/userActions";
 
