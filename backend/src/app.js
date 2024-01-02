@@ -5,13 +5,18 @@ const connectDB = require('./config/database');
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require('path')
-var cors = require('cors')
+const cors = require('cors')
 
 
 
-
+app.use(cors({
+    origin: ["https://mindful-chi.vercel.app/"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true
+}))
 const port = process.env.PORT || 5000;
 connectDB();
+
 
 //routes
 const user = require('./routes/userRoute');
@@ -23,7 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-app.use(cors())
 app.use("/api/v1", user)
 
 app.use(express.static(path.join(__dirname, "frontend\index.html")));
