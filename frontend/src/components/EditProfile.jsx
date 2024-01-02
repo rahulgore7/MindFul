@@ -41,7 +41,7 @@ const EditProfile = ({ onCancel }) => {
 
     // Dispatch the action to update the user profile
     dispatch(editUser(user._id, filteredFormData));
-    window.location.reload();
+    
   };
   const handleCancel = (e) => {
     e.preventDefault(); // Prevent the default form submission
