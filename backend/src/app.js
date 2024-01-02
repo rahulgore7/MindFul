@@ -29,6 +29,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use("/api/v1", user)
+app.get('/', (req, res) => {
+    res.json({
+      message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
+    });
+  });
 
 app.use(express.static(path.join(__dirname, "frontend\index.html")));
 
