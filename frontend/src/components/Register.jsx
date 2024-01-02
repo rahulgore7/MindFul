@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../config";
+const apiUrl = `${BASE_URL}`;
 
 const Register = () => {
   const history = useNavigate();
@@ -17,7 +19,7 @@ const Register = () => {
   async function registerUser(event) {
     event.preventDefault();
     const checkResponse = await fetch(
-      "https://backend-roan-nu.vercel.app/api/v1/checkRegistration",
+      `${apiUrl}/checkRegistration`,
       {
         method: "POST",
         headers: {
@@ -44,7 +46,7 @@ const Register = () => {
       return;
     }
 
-    const response = await fetch("https://backend-roan-nu.vercel.app/api/v1/register", {
+    const response = await fetch(`${apiUrl}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,9 +75,9 @@ const Register = () => {
     <div className="h-screen md:flex">
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
         <div>
-          <h1 className="text-white font-bold text-4xl font-sans">GoFinance</h1>
+          <h1 className="text-white font-bold text-4xl font-sans">User Management System</h1>
           <p className="text-white mt-1">
-            The most popular peer to peer lending at SEA
+            Developed by Rahul Gore
           </p>
           <button
             type="submit"

@@ -10,6 +10,13 @@ const path = require('path')
 const cors = require('cors')
 
 
+// const corsOrigin = {
+//     origin: 'http://localhost:5173', //or whatever port your frontend is using
+//     credentials: true,
+//     optionSuccessStatus: 200
+// }
+// app.use(cors(corsOrigin));
+
 
 const port = process.env.PORT || 5000;
 connectDB();

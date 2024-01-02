@@ -20,6 +20,8 @@ import {
     LOAD_USER_REQUEST
 } from "../constants/userConstants"
 import axios from 'axios';
+import BASE_URL from "../config";
+const apiUrl = `${BASE_URL}`;
 
 
 export const logout = () => async (dispatch) => {
@@ -41,7 +43,7 @@ export const deleteUser = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_USER_REQUEST });
 
-        const { data } = await axios.delete(`https://backend-roan-nu.vercel.app/api/v1/edit/${id}`);
+        const { data } = await axios.delete(`${apiUrl}/edit/${id}`);
         dispatch({ type: DELETE_USER_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -54,7 +56,7 @@ export const deleteUser = (id) => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_USERS_REQUEST });
-        const { data } = await axios.get(`https://backend-roan-nu.vercel.app/api/v1/allUsers`);
+        const { data } = await axios.get(`${apiUrl}/allUsers`);
 
         dispatch({ type: ALL_USERS_SUCCESS, payload: data.users });
     } catch (error) {
@@ -65,7 +67,7 @@ export const getAllUsers = () => async (dispatch) => {
 //edit user:
 export const editUser = (id, userData) => async (dispatch) => {
     try {
-        const { data } = await axios.put(`https://backend-roan-nu.vercel.app/api/v1/updates/${id}`, userData);
+        const { data } = await axios.put(`${apiUrl}/updates/${id}`, userData);
 
         dispatch({ type: EDIT_USER_SUCCESS, payload: data });
     } catch (error) {
@@ -110,7 +112,7 @@ export const login = (email, password) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } };
         const { data } = await axios.post(
-            `https://backend-roan-nu.vercel.app/api/v1/login`,
+            `${apiUrl}/login`,
             { email, password },
             config
         );
@@ -144,7 +146,7 @@ export const loadUser = () => async (dispatch) => {
     try {
       dispatch({ type: LOAD_USER_REQUEST });
   
-      const { data } = await axios.get(`https://backend-roan-nu.vercel.app/api/v1/me`);
+      const { data } = await axios.get(`${apiUrl}/me`);
       console.log(data)
   
       dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/userActions";
 
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ const Login = () => {
     } catch (error) {
       // Handle login failure if needed
       console.error("Login failed:", error);
+      alert(error)
     }
   };
 
@@ -31,7 +33,7 @@ const Login = () => {
             Login Page
           </h1>
           <p className="text-white mt-1">
-            The most popular peer to peer lending at SEA
+            User Management System by Rahul Gore
           </p>
           <button
             type="submit"

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { logout } from "../actions/userActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import BASE_URL from "../config";
+import logoImage from "../assets/logo.svg";
+const apiUrl = `${BASE_URL}`;
 const Navbar = ({ setSearchResults }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
@@ -40,9 +42,7 @@ const Navbar = ({ setSearchResults }) => {
   const searchHandle = async (event) => {
     let key = event.target.value;
     try {
-      const response = await fetch(
-        `https://backend-roan-nu.vercel.app/api/v1/search/${key}`
-      );
+      const response = await fetch(`${apiUrl}/search/${key}`);
       if (response.ok) {
         const result = await response.json();
         setSearchResults(result.users);
@@ -56,16 +56,12 @@ const Navbar = ({ setSearchResults }) => {
 
   return (
     <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
-      <svg
-        className="w-8 h-8 text-indigo-600 stroke-current cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+      <img
+        src={logoImage}
+        alt="Logo"
+        className="w-8 h-8 cursor-pointer"
         onClick={handleOnLogoClick}
-      >
-        {/* ... (your SVG path) */}
-      </svg>
+      />
       <input
         className="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
         type="search"

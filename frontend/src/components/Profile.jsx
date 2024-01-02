@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../actions/userActions";
 import Navbar from "./Navbar";
 
+
 const Profile = () => {
   const dispatch = useDispatch();
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);

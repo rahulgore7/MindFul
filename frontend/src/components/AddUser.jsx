@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 import Dashboard from "./Dashboard";
+import BASE_URL from "../config";
+const apiUrl = `${BASE_URL}`;
+
 
 const AddUser = ({}) => {
   const history = useNavigate();
@@ -20,7 +22,7 @@ const AddUser = ({}) => {
   async function registerUser(event) {
     event.preventDefault();
     const checkResponse = await fetch(
-      "https://backend-roan-nu.vercel.app/api/v1/checkRegistration",
+      `${apiUrl}/checkRegistration`,
       {
         method: "POST",
         headers: {
@@ -47,7 +49,7 @@ const AddUser = ({}) => {
       return;
     }
 
-    const response = await fetch("https://backend-roan-nu.vercel.app/api/v1/register", {
+    const response = await fetch(`${apiUrl}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
