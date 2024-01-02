@@ -41,7 +41,7 @@ const Navbar = ({ setSearchResults }) => {
     let key = event.target.value;
     try {
       const response = await fetch(
-        `https://mindful-ccdkp8tu0-rahulgore7.vercel.app/api/v1/search/${key}`
+        `https://backend-roan-nu.vercel.app/api/v1/search/${key}`
       );
       if (response.ok) {
         const result = await response.json();
