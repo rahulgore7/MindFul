@@ -1,28 +1,19 @@
 {
   "version": 2,
   "builds": [
-      {
-          "src": "/src/app.js",
-          "use": "@vercel/python"
+    {
+      "src": "./src/app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "./src/app.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
       }
-  ],
-  
-  "rewrites": [
-      { "source": "/(.*)", "destination": "/src/app.js" }
-  ],
-
-  "headers": [
-      {
-        "source": "/(.*)",
-        "headers": [
-          { "key": "Access-Control-Allow-Origin", "value": "*" }
-        ]
-      },
-      {
-        "source": "https://client-kappa-black.vercel.app/(.*)",
-        "headers": [
-          { "key": "Access-Control-Allow-Origin", "value": "*" }
-        ]
-      }  
+    }
   ]
 }
