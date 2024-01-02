@@ -10,7 +10,7 @@ const cors = require('cors')
 
 
 app.use(cors({
-    origin: ["https://client-kappa-black.vercel.app/"],
+    origin: ["https://client-kappa-black.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true
 }))
