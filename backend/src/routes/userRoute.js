@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, deleteUser, getAllUser, updateProfile, logout, checkRegistration, updateUser, getUserDetails, searchUser } = require('../controllers/userController');
+const { register, login, deleteUser, getAllUser, updateProfile, logout, checkRegistration, updateUser, getUserDetails, searchUser, verifyToken } = require('../controllers/userController');
 const router = express.Router();
 const { isAuthenticatedUser } = require('../middleware/auth')
 
@@ -22,6 +22,9 @@ router.get('/me', isAuthenticatedUser, (req, res) => {
 });
 
 router.get('/search/:key', searchUser);
+router.post('verify', verifyToken, (req, res) => {
+    res.json({ user: req.user });
+});
 // router.get('/getUser/:id', getUserDetails);
 
 // router.post('/search', customerController.searchCustomers);

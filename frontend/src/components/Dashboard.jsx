@@ -14,12 +14,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [dispatch]);
+  }, [dispatch,editing]);
 
   const handleDeleteUser = async (id) => {
     try {
       await dispatch(deleteUser(id));
-      window.location.reload();
+      dispatch(getAllUsers())
       // No need to update state manually, Redux will take care of it
     } catch (error) {
       console.error("Error deleting user:", error);

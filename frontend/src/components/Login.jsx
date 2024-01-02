@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/userActions";
 
-
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -21,7 +20,7 @@ const Login = () => {
     } catch (error) {
       // Handle login failure if needed
       console.error("Login failed:", error);
-      alert(error)
+      alert("Invalid email or password");
     }
   };
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser } from "../actions/userActions";
+import { editUser, getAllUsers } from "../actions/userActions";
+import BASE_URL from "../config";
+const apiUrl = `${BASE_URL}`;
 
 const EditProfile = ({ onCancel }) => {
   const dispatch = useDispatch();
@@ -33,15 +35,47 @@ const EditProfile = ({ onCancel }) => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const { email, tel } = formData;
+    if (email !== user.email || tel !== user.tel) {
+      const checkResponse = await fetch(`${apiUrl}/checkRegistration`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          tel,
+        }),
+      });
+      const checkData = await checkResponse.json();
+      if (!checkData.success) {
+        // Display an alert or handle the error message from the server
+        alert("Error checking registration. Please try again.");
+        return;
+      }
+
+      if (checkData.emailExists) {
+        alert("Email is already registered. Please use a different email.");
+        return;
+      }
+
+      if (checkData.telExists) {
+        alert(
+          "Mobile is already registered. Please use a different mobile number."
+        );
+        return;
+      }
+    }
+
     const filteredFormData = Object.fromEntries(
       Object.entries(formData).filter(([key, value]) => value !== undefined)
     );
-
     // Dispatch the action to update the user profile
-    dispatch(editUser(user._id, filteredFormData));
-    
+    await dispatch(editUser(user._id, filteredFormData));
+    dispatch(getAllUsers());
+    onCancel();
   };
   const handleCancel = (e) => {
     e.preventDefault(); // Prevent the default form submission

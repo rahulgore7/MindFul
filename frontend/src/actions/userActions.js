@@ -23,10 +23,9 @@ import axios from 'axios';
 import BASE_URL from "../config";
 const apiUrl = `${BASE_URL}`;
 
-
 export const logout = () => async (dispatch) => {
     try {
-        await axios.get(`/api/v1/logout`);
+        await axios.get(`${apiUrl}/logout`);
 
         dispatch({ type: LOGOUT_SUCCESS });
         localStorage.removeItem('token');
@@ -124,35 +123,48 @@ export const login = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data.message
+            payload: error.response ? error.response.data.message : 'Invalid email or password'
         })
     }
 }
 
 // authActions.js
-export const checkAuthStatus = () => (dispatch) => {
+export const checkAuthStatus = () => async (dispatch) => {
     const token = localStorage.getItem('token');
 
-    if (token) {
-        // Dispatch action for authenticated user
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        dispatch(login({ token }));
+    if (!token) {
+        // No token found, the user is not authenticated
+        dispatch(logout());
+        return false;
     }
-    
+
+    try {
+        // Verify the token on the server side
+        const response = await axios.post(`${apiUrl}/verify`, { token });
+
+        // If the token is valid, dispatch the login action with user data
+        const user = response.data.user;
+        dispatch(login(user));
+        console.log('Authentication success');
+        return true;
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        dispatch(logout());
+    }
 };
 
 //Get signed in user details
 export const loadUser = () => async (dispatch) => {
     try {
-      dispatch({ type: LOAD_USER_REQUEST });
-  
-      const { data } = await axios.get(`${apiUrl}/me`);
-      console.log(data)
-  
-      dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
-    } catch (error) {
-      dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
-    }
-  };
+        dispatch({ type: LOAD_USER_REQUEST });
 
-  
+        const { data } = await axios.get(`${apiUrl}/me`);
+        console.log(data)
+
+        dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+    } catch (error) {
+        dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+    }
+};
+
+

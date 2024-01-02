@@ -204,3 +204,23 @@ exports.searchUser = catchAsyncErrors(async (req, res, next) => {
         users,
     });
 })
+
+exports.verifyToken = catchAsyncErrors(async (req, res, next) => {
+    const token = req.body.token;
+
+  if (!token) {
+    return res.status(401).json({ message: 'Token not provided' });
+  }
+
+  try {
+    // Verify the token using your secret key (keep it secret)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Attach the decoded user data to the request object for later use
+    req.user = decoded.user;
+
+    next(); // Proceed to the next middleware or route handler
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+});
